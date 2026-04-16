@@ -69,7 +69,7 @@
 
             <Border Background="#E0E5EC" CornerRadius="10,10,0,0" Padding="10,5" Style="{StaticResource ExtrudeEffectStyle}" Margin="0,0,0,-1">
                 <ToolBar Background="Transparent" BorderThickness="0" BorderBrush="#C4CDD5">
-                    <RadioButton Content="Lápis" GroupName="drawgroup" IsChecked="True" Click="DrawButton_Click" ToolTip="Modo Desenho (Teclas 1, 2, 3 para tamanho, B, G para cor)" Width="59" Background="#40E8EDF1" FontSize="14" FontWeight="Bold"/>
+                    <RadioButton Content="Lápis" GroupName="drawgroup" IsChecked="True" Click="DrawButton_Click" ToolTip="Modo Desenho (Teclas 1, 2, 3 para tamanho, B, G para cor)" Width="59" Background="#40E8EDF1" FontSize="14" FontWeight="Bold" Checked="RadioButton_Checked"/>
                     <RadioButton Content="Borracha" GroupName="drawgroup" Click="DrawButton_Click" ToolTip="Modo Borracha" Width="66" FontWeight="Bold" FontSize="14"/>
                     <RadioButton Content="Selecionar" GroupName="drawgroup" Click="DrawButton_Click" ToolTip="Modo Seleção de Traços" Width="95" FontWeight="Bold" FontSize="14"/>
                     <Separator Background="#C4CDD5"/>

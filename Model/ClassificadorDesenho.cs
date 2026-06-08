@@ -1,5 +1,6 @@
 ﻿using Microsoft.ML;
 using System.Drawing;
+using System.IO;
 
 namespace Model
 {
@@ -83,11 +84,16 @@ namespace Model
         }
 
 
-        public ResultadoClassificacao ClassificarDesenho(Bitmap bitmap)
+        public IResultadoClassificacao ClassificarDesenho(Bitmap bitmap)
         {
             if (bitmap == null)
             {
                 throw new ArgumentNullException(nameof(bitmap));
+            }
+
+            if (BitmapEstaVazio(bitmap))
+            {
+                throw new ArgumentException("O desenho está vazio.", nameof(bitmap));
             }
 
             using Bitmap imagemNormalizada = NormalizarImagem(bitmap);
@@ -96,6 +102,27 @@ namespace Model
             float[] pixels = ConverterParaFloatArray(imagemPreparada);
 
             return ExecutarPredicaoONNX(pixels);
+        }
+
+        private static bool BitmapEstaVazio(Bitmap bitmap)
+        {
+            const int LimiarBranco = 250;
+
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    Color cor = bitmap.GetPixel(x, y);
+                    int cinzento = (int)Math.Round(0.299 * cor.R + 0.587 * cor.G + 0.114 * cor.B);
+
+                    if (cinzento < LimiarBranco)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private static Bitmap NormalizarImagem(Bitmap bitmap)
@@ -122,15 +149,6 @@ namespace Model
             return imagemNormalizada;
         }
 
-        private static Bitmap RedimensionarPara28x28(Bitmap bitmap)
-        {
-            if (bitmap == null)
-            {
-                throw new ArgumentNullException(nameof(bitmap));
-            }
-
-            return new Bitmap(bitmap, new Size(LarguraFinal, AlturaFinal));
-        }
 
         private static float[] ConverterParaFloatArray(Bitmap bitmap)
         {

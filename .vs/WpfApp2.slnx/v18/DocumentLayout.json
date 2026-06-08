@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\julin\\Desktop\\interface\\31Bytes\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AFB859BE-8BB8-05E9-4127-2118478E15B6}|WpfApp2.csproj|c:\\users\\julin\\desktop\\interface\\31bytes\\prototipoacoplamento\u002Binterface\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{AFB859BE-8BB8-05E9-4127-2118478E15B6}|WpfApp2.csproj|solutionrelative:prototipoacoplamento\u002Binterface\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\julin\\Desktop\\interface\\31Bytes\\prototipoAcoplamento\u002BInterface\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "prototipoAcoplamento\u002BInterface\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\julin\\Desktop\\interface\\31Bytes\\prototipoAcoplamento\u002BInterface\\MainWindow.xaml",
+              "RelativeToolTip": "prototipoAcoplamento\u002BInterface\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-08T15:58:20.529Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

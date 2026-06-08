@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfApp2
+namespace classificadorDigitos
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System.IO;
 using System;
 using System.Windows;
@@ -7,27 +7,34 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32; // For SaveFileDialog
+using Model;
+using Controller;
 
 
-namespace WpfApp2
+namespace classificadorDigitos
 {
     public partial class MainWindow : Window
     {
         private DrawingAttributes strokeAttr;
+        private readonly Controlador controlador;
 
         public MainWindow()
         {
             InitializeComponent();
             // Pegamos a referência dos atributos padrão do InkCanvas definido no XAML
             strokeAttr = DrawingCanvas.DefaultDrawingAttributes;
+
+            // Para manter a arquitetura escolhida a View cria o Controlador, que irá
+            // tratar da lógica de carregar o modelo, de forma a separar corretamente 
+            // as responsabilidades. 
+            controlador = new Controlador();
         }
 
         private void DrawButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton button && button.Content != null)
             {
-                string modo = button.Content.ToString();
+                string modo = button.Content.ToString() ?? string.Empty;
 
                 if (modo == "Lápis")
                     DrawingCanvas.EditingMode = InkCanvasEditingMode.Ink;
@@ -48,10 +55,63 @@ namespace WpfApp2
         // Executa a lógica de identificação (Botão Identificar)
         private void IdentifyNumber_Click(object sender, RoutedEventArgs e)
         {
-            
-            // Aqui entrará sua lógica MNIST futuramente.
-            // Por enquanto, vamos simular um resultado.
-            ResultTextBlock.Text = "7"; // Exemplo
+            try
+            {
+                // É necessário capturar a imagem desenhada no DrawingCanvas e 
+                // guardá-la num Bitmap que possa ser passado ao Model para
+                // processamento.
+                using var bitmap = CanvasParaBitmap(DrawingCanvas);
+                // - A classidficação é delegada para o Controller de forma a manter a
+                // View focada apenas na interação entre utilizador e aplicação. 
+                IResultadoClassificacao resultado = controlador.PedidoClassificacao(bitmap);
+                ResultTextBlock.Text = resultado.Digito.ToString();
+            }
+            // Este é o caso da exceção que mencionei. O Model alerta usando 
+            // ArgumentException que o Bitmap não contém píxeis coloridos. Quando
+            // a exceção é apanhada a View comunica o facto ao utilizador abrindo uma
+            // janela. 
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Por favor, desenhe um número antes de identificar.",
+                                "Canvas vazio", MessageBoxButton.OK, MessageBoxImage.Information);
+                ResultTextBlock.Text = "?";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao identificar: " + ex.Message,
+                                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                ResultTextBlock.Text = "?";
+            }
+        }
+
+        // Função que renderiza a imagem no InkCanvas DrawingCanvas para uma imagem
+        // compatível com o processo de classificação implementado no Model. 
+        private static System.Drawing.Bitmap CanvasParaBitmap(InkCanvas canvas)
+        {
+            int largura = (int)canvas.ActualWidth;
+            int altura = (int)canvas.ActualHeight;
+
+            var rtb = new RenderTargetBitmap(largura, altura, 96, 96, PixelFormats.Pbgra32);
+
+            var visual = new DrawingVisual();
+            using (DrawingContext contexto = visual.RenderOpen())
+            {
+                contexto.DrawRectangle(
+                    new VisualBrush(canvas),
+                    null,
+                    new Rect(0, 0, largura, altura));
+            }
+
+            rtb.Render(visual);
+
+            var encoder = new BmpBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            using var ms = new MemoryStream();
+            encoder.Save(ms);
+            ms.Position = 0;
+            using var bitmapTemporario = new System.Drawing.Bitmap(ms);
+            return new System.Drawing.Bitmap(bitmapTemporario);
         }
 
         private void DrawPanel_KeyUp(object sender, KeyEventArgs e)

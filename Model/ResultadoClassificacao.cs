@@ -1,6 +1,6 @@
 ﻿namespace Model
 {
-    public class ResultadoClassificacao
+    public class ResultadoClassificacao : IResultadoClassificacao
     {
         public int Digito { get; set; }
 

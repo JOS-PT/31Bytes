@@ -61,10 +61,8 @@ namespace classificadorDigitos
                 // guardá-la num Bitmap que possa ser passado ao Model para
                 // processamento.
                 using var bitmap = CanvasParaBitmap(DrawingCanvas);
-                // - A classidficação é delegada para o Controller de forma a manter a
-                // View focada apenas na interação entre utilizador e aplicação. 
-                IResultadoClassificacao resultado = controlador.PedidoClassificacao(bitmap);
-                ResultTextBlock.Text = resultado.Digito.ToString();
+                List<IResultadoClassificacao> resultados = controlador.PedidoClassificacaoMultipla(bitmap);
+                ResultTextBlock.Text = string.Join("", resultados.Select(r => r.Digito));
             }
             // Este é o caso da exceção que mencionei. O Model alerta usando 
             // ArgumentException que o Bitmap não contém píxeis coloridos. Quando
@@ -114,21 +112,6 @@ namespace classificadorDigitos
             return new System.Drawing.Bitmap(bitmapTemporario);
         }
 
-        private void DrawPanel_KeyUp(object sender, KeyEventArgs e)
-        {
-            int keyVal = (int)e.Key;
-            if (keyVal >= 35 && keyVal <= 68) // Teclas 1, 2, 3, B, G
-            {
-                switch (keyVal)
-                {
-                    case 35: strokeAttr.Width = 2; strokeAttr.Height = 2; break; // Tecla 1
-                    case 36: strokeAttr.Width = 4; strokeAttr.Height = 4; break; // Tecla 2
-                    case 37: strokeAttr.Width = 6; strokeAttr.Height = 6; break; // Tecla 3
-                    case 45: strokeAttr.Color = Colors.Blue; break;             // Tecla B
-                    case 50: strokeAttr.Color = Colors.Green; break;            // Tecla G
-                }
-            }
-        }
 
 
         private void ExportTo28x28(InkCanvas DrawingCanvas, string filePath)

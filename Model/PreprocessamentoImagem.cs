@@ -95,6 +95,61 @@ namespace Model
             return recorte;
         }
 
+        public static List<Bitmap> SegmentarDigitos(Bitmap bitmap)
+        {
+            if (bitmap == null)
+                throw new ArgumentNullException(nameof(bitmap));
+
+            // Histograma de colunas: soma de píxeis escuros por coluna
+            int[] histograma = new int[bitmap.Width];
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    if (bitmap.GetPixel(x, y).R < LimiteTraco)
+                        histograma[x]++;
+                }
+            }
+
+            // Encontrar segmentos contínuos de colunas não-gap
+            var segmentos = new List<(int inicio, int fim)>();
+            int? inicioSegmento = null;
+
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                if (histograma[x] > 0)
+                {
+                    inicioSegmento ??= x;
+                }
+                else if (inicioSegmento.HasValue)
+                {
+                    segmentos.Add((inicioSegmento.Value, x - 1));
+                    inicioSegmento = null;
+                }
+            }
+            if (inicioSegmento.HasValue)
+                segmentos.Add((inicioSegmento.Value, bitmap.Width - 1));
+
+            if (segmentos.Count == 0)
+                return new List<Bitmap>();
+
+            // Recortar cada segmento
+            var resultado = new List<Bitmap>(segmentos.Count);
+            foreach (var (inicio, fim) in segmentos)
+            {
+                int largura = fim - inicio + 1;
+                Bitmap segmento = new Bitmap(largura, bitmap.Height);
+                using Graphics g = Graphics.FromImage(segmento);
+                g.DrawImage(bitmap,
+                    new Rectangle(0, 0, largura, bitmap.Height),
+                    new Rectangle(inicio, 0, largura, bitmap.Height),
+                    GraphicsUnit.Pixel);
+                resultado.Add(segmento);
+            }
+
+            return resultado;
+        }
+
         public static Bitmap AjustarParaCanvas28x28(Bitmap bitmap)
         {
             if (bitmap == null)

@@ -21,9 +21,24 @@ namespace Controller
 
         public IResultadoClassificacao PedidoClassificacao(Bitmap bitmap)
         {
-            // O pedido de classificação é encaminhado para o Model, funcionando o
-            // Controller assim como ligação entre a View e o Model.
             return classificador.ClassificarDesenho(bitmap);
+        }
+
+        public List<IResultadoClassificacao> PedidoClassificacaoMultipla(Bitmap bitmap)
+        {
+            List<Bitmap> segmentos = PreprocessamentoImagem.SegmentarDigitos(bitmap);
+
+            if (segmentos.Count == 0)
+                throw new ArgumentException("O bitmap não contém píxeis desenhados.");
+
+            var resultados = new List<IResultadoClassificacao>(segmentos.Count);
+            foreach (Bitmap segmento in segmentos)
+            {
+                resultados.Add(classificador.ClassificarDesenho(segmento));
+                segmento.Dispose();
+            }
+
+            return resultados;
         }
     }
 }

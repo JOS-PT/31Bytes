@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("classificadorDigitos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d839c41bee71fca8242bc77a5c85fd8ca4c6df47")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("classificadorDigitos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("classificadorDigitos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

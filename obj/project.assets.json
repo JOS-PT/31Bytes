@@ -719,19 +719,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\julin\\.nuget\\packages\\": {}
+    "C:\\Users\\Beleza\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\julin\\Desktop\\interface\\31Bytes\\classificadorDigitos.csproj",
+      "projectUniqueName": "C:\\Users\\Beleza\\Documents\\teste2\\classificadorDigitos.csproj",
       "projectName": "classificadorDigitos",
-      "projectPath": "C:\\Users\\julin\\Desktop\\interface\\31Bytes\\classificadorDigitos.csproj",
-      "packagesPath": "C:\\Users\\julin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\julin\\Desktop\\interface\\31Bytes\\obj\\",
+      "projectPath": "C:\\Users\\Beleza\\Documents\\teste2\\classificadorDigitos.csproj",
+      "packagesPath": "C:\\Users\\Beleza\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Beleza\\Documents\\teste2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\julin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Beleza\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -799,7 +799,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
